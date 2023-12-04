@@ -2,12 +2,14 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PuzzleGame extends JFrame{
 
@@ -19,6 +21,7 @@ public class PuzzleGame extends JFrame{
     private ArrayList<FancyButton> buttonList;
     private BufferedImage imageSource;
     private BufferedImage imageResized;
+    private ArrayList<FancyButton> buttonSolution;
 
 
     public PuzzleGame() {
@@ -54,11 +57,24 @@ public class PuzzleGame extends JFrame{
             
             
             FancyButton btn = new FancyButton();
-            btn.setIcon(new ImageIcon(imageslice));
-            buttonList.add(btn);
-            panel.add(btn);
-        }
+            btn.addActionListener(e -> myClickEventHandler(e));
 
+            if(i == COLUMNS * ROWS -1) // the last button
+            {
+                btn.setBorderPainted(false);
+                btn.setContentAreaFilled(false);
+            } else 
+            {
+                btn.setIcon(new ImageIcon(imageslice));
+            }
+            buttonSolution.add(btn);
+            buttonList.add(btn);
+            
+        }
+        Collections.shuffle(buttonList);
+        for(var button : buttonList) {
+            panel.add(button);
+        }
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         setResizable(false);
@@ -68,5 +84,39 @@ public class PuzzleGame extends JFrame{
 
     private BufferedImage loadImage() throws IOException {
         return ImageIO.read(new File("Liverpool.jpg"));
+    }
+    private void myClickEventHandler(ActionEvent e){
+        FancyButton btnClicked = (FancyButton)e.getSource();
+        int i = buttonList.indexOf(btnClicked);
+        int column = i % COLUMNS;
+        int row = i / COLUMNS;
+
+        int emptyIndex = -1;
+        for(int j=0; j<buttonList.size(); j++) 
+        {
+            if(buttonList.get(j).getIcon() == null)
+            {
+                emptyIndex = j;
+            }
+        }
+        int emptyColumn = emptyIndex % COLUMNS;
+        int emptyRow = emptyIndex / COLUMNS;
+
+        if(emptyRow == row && Math.abs(column - emptyColumn) == 1 || emptyColumn == column && Math.abs(row - emptyRow) == 1) 
+        {
+            Collections.swap(buttonList, i, emptyIndex);
+            updateButtons();
+        } 
+        if(buttonSolution == buttonList)
+        {
+            JOptionPane.showMessageDialog(btnClicked, "Oh my god you spent how long doing his stupid puzzle?");
+        }
+    }
+    public void updateButtons() {
+        panel.removeAll();
+        for(var btn : buttonList) {
+            panel.add(btn);
+        }
+        panel.validate();
     }
 }
