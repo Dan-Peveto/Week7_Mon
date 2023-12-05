@@ -21,12 +21,13 @@ public class PuzzleGame extends JFrame{
     private ArrayList<FancyButton> buttonList;
     private BufferedImage imageSource;
     private BufferedImage imageResized;
-    private ArrayList<FancyButton> buttonSolution;
+    private ArrayList<FancyButton> buttonSolution = new ArrayList<FancyButton>();
+    private String filePath;
 
 
-    public PuzzleGame() {
+    public PuzzleGame(String filePath) {
         super("Puzzle Game");
-
+        this.filePath = filePath;
         panel = new JPanel();
         panel.setLayout(new GridLayout(ROWS, COLUMNS)); // have to manually import java.awt.*; 
         add(panel);
@@ -83,7 +84,7 @@ public class PuzzleGame extends JFrame{
     }
 
     private BufferedImage loadImage() throws IOException {
-        return ImageIO.read(new File("Liverpool.jpg"));
+        return ImageIO.read(new File(filePath));
     }
     private void myClickEventHandler(ActionEvent e){
         FancyButton btnClicked = (FancyButton)e.getSource();
