@@ -71,6 +71,7 @@ public class PuzzleGame extends JFrame{
             buttonSolution.add(btn);
             buttonList.add(btn);
             
+            
         }
         Collections.shuffle(buttonList);
         for(var button : buttonList) {
