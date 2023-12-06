@@ -1,4 +1,5 @@
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,32 +8,46 @@ import javax.swing.*;
 
 public class GameHandler extends JFrame{
     // fields
-    private final int WIDTH = 5000; //set width
-    private final int HEIGHT = 5000; //set height
+
     public JPanel panel; // create panel
     private final int COLUMNS = 2, ROWS = 2; // create grid size
     private BufferedImage imageSource; // image var
     private BufferedImage imageResized; //resized var
     private ArrayList<FancyButton> buttonList = new ArrayList<FancyButton>(); // create button array 
-    private ImageIcon icon1 = new ImageIcon("Liverpool.jpg");
-    private ImageIcon icon2 = new ImageIcon("ManUnit.jpg");
-    private ImageIcon icon3 = new ImageIcon("ManCity.png");
-    private ImageIcon icon4 = new ImageIcon("Arsenal.png");
+    private ArrayList<String> pathList = new ArrayList<String>();
     private ArrayList<ImageIcon> imageList = new ArrayList<ImageIcon>();
 
     // methods
+
+    //to do 
     
+    private ImageIcon transformImage(String image)
+    {
+        ImageIcon imageIcon = new ImageIcon(image); //load the image to an imageIcon
+        Image img = imageIcon.getImage(); // transform image to Image 
+        Image newimg = img.getScaledInstance(500, 500, java.awt.Image.SCALE_SMOOTH); // scale it withimage smooth
+        ImageIcon transformedImage = new ImageIcon(newimg);
+        return transformedImage;
+    }
     // ctor
     public GameHandler() {
         super("Puzzle Game");
         panel = new JPanel(); // create the panel 
         panel.setLayout(new GridLayout(COLUMNS, ROWS)); //add columns and rows tow the panel via layout
-        add(panel);
-        imageList.add(icon1);
-        imageList.add(icon2);
-        imageList.add(icon3);
-        imageList.add(icon4);
+        add(panel); // add panel
+        // add images to filePath
+        pathList.add("Assets/Liverpool.jpg");
+        pathList.add("Assets/ManCity.png");
+        pathList.add("Assets/ManUnit.jpg");
+        pathList.add("Assets/Arsenal.png");
+
+        // convert image size and add to list
+        for(String path : pathList)
+        {
+            imageList.add(transformImage(path));
+        }
         
+
         //add buttons to the list
         for(int i=0; i<COLUMNS*ROWS; i++)
         {
