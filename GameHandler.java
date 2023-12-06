@@ -1,8 +1,8 @@
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Collection;
+
 
 import javax.swing.*;
 
@@ -11,16 +11,21 @@ public class GameHandler extends JFrame{
 
     public JPanel panel; // create panel
     private final int COLUMNS = 2, ROWS = 2; // create grid size
-    private BufferedImage imageSource; // image var
-    private BufferedImage imageResized; //resized var
     private ArrayList<FancyButton> buttonList = new ArrayList<FancyButton>(); // create button array 
     private ArrayList<String> pathList = new ArrayList<String>();
     private ArrayList<ImageIcon> imageList = new ArrayList<ImageIcon>();
 
     // methods
 
-    //to do 
-    
+    // Method for button clicked
+    private void myClickEventHandler(ActionEvent e)
+    {
+        FancyButton btnClicked = (FancyButton)e.getSource();
+        int i = buttonList.indexOf(btnClicked);
+        PuzzleGame playGame = new PuzzleGame(pathList.get(i));
+    }
+
+    // Method to resize image
     private ImageIcon transformImage(String image)
     {
         ImageIcon imageIcon = new ImageIcon(image); //load the image to an imageIcon
@@ -51,16 +56,14 @@ public class GameHandler extends JFrame{
         //add buttons to the list
         for(int i=0; i<COLUMNS*ROWS; i++)
         {
-            // Formula for adding row and col 
-            int row = i / COLUMNS;
-            int col = i % COLUMNS; 
-
             FancyButton btn = new FancyButton(); 
             panel.add(btn);
             btn.setIcon(imageList.get(i));
             buttonList.add(btn);
+            btn.addActionListener(e -> myClickEventHandler(e));
         }
-
+        
+        
         
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
