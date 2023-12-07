@@ -23,6 +23,7 @@ public class GameHandler extends JFrame{
         FancyButton btnClicked = (FancyButton)e.getSource();
         int i = buttonList.indexOf(btnClicked);
         PuzzleGame playGame = new PuzzleGame(pathList.get(i));
+        panel.setVisible(false);
     }
 
     // Method to resize image
@@ -68,7 +69,7 @@ public class GameHandler extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         setResizable(false);
-        setSize(1500, 1500);
+        setSize(1000, 1000);
         setLocation(700, 0);
     }
 }
