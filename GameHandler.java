@@ -1,20 +1,19 @@
-import java.awt.GridLayout;
-import java.awt.Image;
+// required imports 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-
-
 import javax.swing.*;
 
-public class GameHandler extends JFrame{
+public class GameHandler extends JFrame
+{
     // fields
 
     public JPanel panel; // create panel
     private final int COLUMNS = 2, ROWS = 2; // create grid size
     private ArrayList<FancyButton> buttonList = new ArrayList<FancyButton>(); // create button array 
-    private ArrayList<String> pathList = new ArrayList<String>();
-    private ArrayList<ImageIcon> imageList = new ArrayList<ImageIcon>();
-
+    private ArrayList<String> pathList = new ArrayList<String>(); // create array to hold paths
+    private ArrayList<ImageIcon> imageList = new ArrayList<ImageIcon>(); // create array to hold images
+    
     // methods
 
     // Method for button clicked
@@ -23,7 +22,7 @@ public class GameHandler extends JFrame{
         FancyButton btnClicked = (FancyButton)e.getSource();
         int i = buttonList.indexOf(btnClicked);
         PuzzleGame playGame = new PuzzleGame(pathList.get(i));
-        panel.setVisible(false);
+        setVisible(false);
     }
 
     // Method to resize image
@@ -46,6 +45,7 @@ public class GameHandler extends JFrame{
         pathList.add("Assets/ManCity.png");
         pathList.add("Assets/ManUnit.jpg");
         pathList.add("Assets/Arsenal.png");
+        
 
         // convert image size and add to list
         for(String path : pathList)
