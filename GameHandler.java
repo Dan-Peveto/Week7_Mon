@@ -21,7 +21,7 @@ public class GameHandler extends JFrame
     {
         FancyButton btnClicked = (FancyButton)e.getSource();
         int i = buttonList.indexOf(btnClicked);
-        PuzzleGame playGame = new PuzzleGame(pathList.get(i));
+        PuzzleGame startGame = new PuzzleGame(pathList.get(i), 3, 4);
         setVisible(false);
     }
 

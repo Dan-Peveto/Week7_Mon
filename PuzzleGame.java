@@ -18,11 +18,9 @@ public class PuzzleGame extends JFrame{
     private JPanel panel; // create panle
     private JComboBox userColNumField; // create text field
     private JComboBox userRowNumField; // create text field
-    private int numRows; // for user input
-    private int numCols; // for user input
     private final int  width = 1000; // set width to final (can't be changed)
     private int height = 1000; // set height will change in future
-    private final int COLUMNS = 3, ROWS = 4; // create COLUMNS and ROWS to-do make these dynamic 
+    private int COLUMNS, ROWS; // create COLUMNS and ROWS to-do make these dynamic 
     private ArrayList<FancyButton> buttonList; // create button list
     private BufferedImage imageSource; // create buffered image var
     private BufferedImage imageResized; // create resizble image var
@@ -32,11 +30,13 @@ public class PuzzleGame extends JFrame{
     private int count = 0; // create count to track how many turns it took
 
     // puzzle game constructor
-    public PuzzleGame(String filePath) // input filePath from GameHandler
+    public PuzzleGame(String filePath, int ROWS, int COLUMNS) // input filePath from GameHandler
     {
         super("Puzzle Game"); // Title
         this.filePath = filePath; 
-        panel = new JPanel(); // initiate the panel
+        this.ROWS = ROWS;
+        this.COLUMNS = COLUMNS;
+          panel = new JPanel(); // initiate the panel
         panel.setLayout(new GridLayout(ROWS, COLUMNS)); // have to manually import java.awt.*; set panel to predefined size
         add(panel); // add panel
         try { // load image and run game
@@ -69,6 +69,7 @@ public class PuzzleGame extends JFrame{
             northJPanel.add(userColNumField);
             northJPanel.add(userRowNumField);
             JButton resetbtn = new JButton("Reset Size");
+            resetbtn.addActionListener(e ->  resetSize(e));
             northJPanel.add(resetbtn);
             add(northJPanel, BorderLayout.NORTH);
 
@@ -160,4 +161,13 @@ public class PuzzleGame extends JFrame{
         GameHandler gameHanlder = new GameHandler();
         setVisible(false);
     } 
+    public void resetSize(ActionEvent e) // method to resize the board
+    {
+        COLUMNS = Integer.parseInt(((String) userColNumField.getSelectedItem()).replaceAll("[^0-9]", ""));
+        ROWS = Integer.parseInt(((String) userRowNumField.getSelectedItem()).replaceAll("[^0-9]", ""));
+        
+        StartGame game = new StartGame(filePath, ROWS, COLUMNS);
+    }
+   
+    
 }
