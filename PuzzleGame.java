@@ -144,7 +144,7 @@ public class PuzzleGame extends JFrame{
             Collections.swap(buttonList, i, emptyIndex);
             updateButtons();
         } 
-        if(buttonSolution == buttonList)
+        if(buttonSolution.equals(buttonList))
         {
             JOptionPane.showMessageDialog(btnClicked, "Great Success! It only took you " + count + " moves to complete this game");
         }
@@ -165,7 +165,7 @@ public class PuzzleGame extends JFrame{
     {
         COLUMNS = Integer.parseInt(((String) userColNumField.getSelectedItem()).replaceAll("[^0-9]", ""));
         ROWS = Integer.parseInt(((String) userRowNumField.getSelectedItem()).replaceAll("[^0-9]", ""));
-        
+        setVisible(false);
         StartGame game = new StartGame(filePath, ROWS, COLUMNS);
     }
    
