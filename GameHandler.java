@@ -1,3 +1,4 @@
+// Dan and Trevor
 // required imports 
 import java.awt.*;
 import java.awt.event.ActionEvent;
